@@ -1,0 +1,6 @@
+github.com/gorilla/websocket v1.4.2 h1:+/TMaTYc4QFitKJxsQ7Yye35DkWvkdLcvGKqM+x0Ufc=
+github.com/gorilla/websocket v1.4.2/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
+github.com/youthtrouble/gotrace v0.0.0-20200708142728-bafe8b5e73c1 h1:R3lCMCk2yLZezBcMDpN3EYYTJsyVze8kYv5okJ6mj40=
+github.com/youthtrouble/gotrace v0.0.0-20200708142728-bafe8b5e73c1/go.mod h1:ifb1z20oiKwZD2VPYiYPXGMppOUos3vUeq+oXK1tpq8=
+github.com/youthtrouble/gotrace v0.0.0-20200709011410-33b82a6c9d49 h1:exZER6noLFQ+ayZbr7VqrwSLuZsnuX+EZawZZW/sb4E=
+github.com/youthtrouble/gotrace v0.0.0-20200709011410-33b82a6c9d49/go.mod h1:ifb1z20oiKwZD2VPYiYPXGMppOUos3vUeq+oXK1tpq8=
