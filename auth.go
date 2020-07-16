@@ -14,10 +14,12 @@ type authHandler struct {
 func (h *authHandler) ServeHTTP (w http.ResponseWriter, r *http.Request) {
 	_, err := r.Cookie("auth")
 	if err == http.ErrNoCookie {
+		//not authticated
 		w.Header().Set("Location", "/login")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 		return 
 	}
+	//success, call the next handler
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
