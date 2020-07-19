@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/stretchr/gomniauth/providers/google"
 	"log"
 	"net/http"
 	"os"
@@ -9,6 +10,9 @@ import (
 	"sync"
 	"text/template"
 
+	"github.com/joho/godotenv"
+	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/signature"
 	trace "github.com/youthtrouble/gotrace"
 )
 
@@ -29,8 +33,16 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 	var addr = flag.String("addr", ":8080", "The addr of the application.")
 	flag.Parse()
+	gomniauth.SetSecurityKey(signature.RandomKey(64))
+	gomniauth.WithProviders(
+		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "http://localholst:8080/auth/callback/google"),
+		)
 	r := newRoom()
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))

@@ -2,8 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/stretchr/gomniauth"
 	"net/http"
-	"log"
+
 	"strings"
 )
 
@@ -38,11 +39,20 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	provider := segs[3]
 	switch action {
 	case "login":
-		log.Println("TODO handle login for", provider)
-			default:
-				w.WriteHeader(http.StatusNotFound)
-				fmt.Fprintf(w, "Auth action %s not supported", action)
-
-
+		provider, err := gomniauth.Provider(provider)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to get provider %s: %s", provider, err), http.StatusBadRequest)
+			return
+		}
+		loginUrl, err := provider.GetBeginAuthURL(nil, nil)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Error when trying to GetBeginAuthURLfor %s:%s", provider, err), http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Location", loginUrl)
+		w.WriteHeader(http.StatusTemporaryRedirect)
+		default:
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprintf(w, "Auth action %s not supported", action)
+		}
 	}
-}
