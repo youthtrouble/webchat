@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/stretchr/objx"
 	"github.com/stretchr/gomniauth"
 	"net/http"
 
@@ -67,7 +68,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, fmt.Sprintf("Error when trying to get user from %s: %s", provider, err), http.StatusInternalServerError)
 			return
 		}
-		authCookieValue := objx.new(map[string]interface{}{
+		authCookieValue := objx.New(map[string]interface{}{
 			"name": user.Name(),
 		}).MustBase64()
 		http.SetCookie(w, &http.Cookie{
