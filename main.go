@@ -11,8 +11,8 @@ import (
 	"text/template"
 
 	"github.com/joho/godotenv"
-	"github.com/stretchr/objx"
 	"github.com/stretchr/gomniauth"
+	"github.com/stretchr/objx"
 	"github.com/stretchr/signature"
 	trace "github.com/youthtrouble/gotrace"
 )
