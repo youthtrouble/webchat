@@ -47,7 +47,7 @@ func main() {
 	flag.Parse()
 	gomniauth.SetSecurityKey(signature.RandomKey(64))
 	gomniauth.WithProviders(
-		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "http://localholst:8080/auth/callback/google"),
+		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "http://localhost:8080/auth/callback/google"),
 		)
 	r := newRoom(UseAuthAvatar)
 	r.tracer = trace.New(os.Stdout)
