@@ -1,11 +1,9 @@
 package main
 
 import (
-	"crypto/md5"
 	"errors"
-	"fmt"
-	"io"
-	"strings"
+	"io/ioutil"
+	"path"
 )
 
 //ErrNoAvatarURL is the error that occurs when the avatar instance is unable to provide a URL
@@ -30,15 +28,34 @@ func (AuthAvatar) GetAvatarURL(c *client) (string, error) {
 type GravatarAvatar struct{}
 var UseGravatar GravatarAvatar
 func(GravatarAvatar) GetAvatarURL(c *client) (string, error) {
-	if email, ok := c.userData["email"]; ok {
-		if emailStr, ok := email.(string); ok {
-			m := md5.New()
-			io.WriteString(m, strings.ToLower(emailStr))
-			return fmt.Sprintf("//www.gravatar.com/avatar/%x", m.Sum(nil)), nil
+	if userid, ok := c.userData["userid"]; ok {
+		if useridStr, ok := userid.(string); ok {
+			return "//www.gravatar.com/avatar/" + useridStr, nil
 		}
 	}
 	return "", ErrNoAvatarURL
 }
 
+type FileSystemAvatar struct{}
+var UseFileSystemAvatar FileSystemAvatar
+func (FileSystemAvatar) GetAvatarURL(c *client) (string, error) {
+	if userid, ok := c.userData["userid"]; ok {
+		if useridStr, ok := userid.(string); ok {
+			files, err := ioutil.ReadDir("avatars")
+			if err != nil {
+				return "", ErrNoAvatarURL
+			}
+			for _, file := range files {
+				if file.IsDir() {
+					continue
+				}
+				if match, _ := path.Match(useridStr+"+", file.Name());
+				match {
+					return "/avatars/" + file.Name(), nil
+				}
+			}
 
-
+		}
+	}
+	return "", ErrNoAvatarURL
+}
