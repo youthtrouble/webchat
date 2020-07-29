@@ -17,6 +17,12 @@ import (
 	trace "github.com/youthtrouble/gotrace"
 )
 
+var avatars Avatar = TryAvatars{
+	UseFileSystemAvatar,
+	UseAuthAvatar,
+	UseGravatar,
+}
+
 // templ represents a single template
 type templateHandler struct {
 	once     sync.Once
@@ -49,7 +55,7 @@ func main() {
 	gomniauth.WithProviders(
 		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "http://localhost:8080/auth/callback/google"),
 		)
-	r := newRoom(UseAuthAvatar)
+	r := newRoom(avatars)
 	r.tracer = trace.New(os.Stdout)
 	http.Handle("/chat", MustAuth(&templateHandler{filename: "chat.html"}))
 	http.Handle("/login", &templateHandler{filename: "login.html"})
