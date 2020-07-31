@@ -1,7 +1,6 @@
 package main
 
 import (
-	"flag"
 	"github.com/stretchr/gomniauth/providers/google"
 	"log"
 	"net/http"
@@ -48,8 +47,9 @@ func main() {
 	//if err != nil {
 	//	log.Fatal("Error loading .env file")
 	//}
-	var addr = flag.String("addr", ":8080", "The addr of the application.")
-	flag.Parse()
+	//var addr = flag.String("addr", ":8080", "The addr of the application.")
+	//flag.Parse()
+	var addr = os.Getenv("PORT")
 	gomniauth.SetSecurityKey(signature.RandomKey(64))
 	gomniauth.WithProviders(
 		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "http://localhost:8080/auth/callback/google"),
@@ -77,8 +77,8 @@ func main() {
 	http.Handle("/room", r)
 	go r.run()
 	// start the web server
-	log.Println("Starting web server on", *addr)
-	if err := http.ListenAndServe(*addr, nil); err != nil {
+	log.Println("Starting web server on", addr)
+	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
