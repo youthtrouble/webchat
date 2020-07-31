@@ -52,7 +52,7 @@ func main() {
 	var addr = os.Getenv("PORT")
 	gomniauth.SetSecurityKey(signature.RandomKey(64))
 	gomniauth.WithProviders(
-		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "http://apoti.herokuapp.com/auth/callback/google"),
+		google.New(os.Getenv("G_KEY"), os.Getenv("G_CLIENT_ID"), "https://apoti.herokuapp.com/auth/callback/google"),
 		)
 	r := newRoom(avatars)
 	r.tracer = trace.New(os.Stdout)
