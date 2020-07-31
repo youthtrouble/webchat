@@ -10,7 +10,6 @@ import (
 	"sync"
 	"text/template"
 
-	"github.com/joho/godotenv"
 	"github.com/stretchr/gomniauth"
 	"github.com/stretchr/objx"
 	"github.com/stretchr/signature"
@@ -45,10 +44,10 @@ func (t *templateHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	//err := godotenv.Load()
+	//if err != nil {
+	//	log.Fatal("Error loading .env file")
+	//}
 	var addr = flag.String("addr", ":8080", "The addr of the application.")
 	flag.Parse()
 	gomniauth.SetSecurityKey(signature.RandomKey(64))
