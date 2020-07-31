@@ -78,7 +78,7 @@ func main() {
 	go r.run()
 	// start the web server
 	log.Println("Starting web server on", addr)
-	if err := http.ListenAndServe(addr, nil); err != nil {
+	if err := http.ListenAndServe(":" + addr, nil); err != nil {
 		log.Fatal("ListenAndServe:", err)
 	}
 }
