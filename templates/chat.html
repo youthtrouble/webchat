@@ -45,7 +45,7 @@
                 if (!window["WebSocket"]) {
                     alert("Error: Your browser does not support web sockets.")
                 } else {
-                    socket = new WebSocket("ws://apoti.herokuapp.com/room");
+                    socket = new WebSocket("ws://apoti.herokuapp.com/chat");
                     socket.onclose = function() {
                         alert("Connection has been closed.");
                     }
