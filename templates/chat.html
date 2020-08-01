@@ -29,7 +29,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script>
             $(function(){
-                var socket = new WebSocket("ws://{{.Host}}/room");;
+                var socket = new WebSocket("ws://{{.Host}}/chat");;
                 var msgBox = $("#chatbox textarea");
                 var messages = $("#messages");
                 $("#chatbox").submit(function(){
