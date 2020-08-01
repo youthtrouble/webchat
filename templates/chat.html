@@ -29,7 +29,7 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <script>
             $(function(){
-                var socket = null;
+                var socket = new WebSocket("ws://{{.Host}}/room");;
                 var msgBox = $("#chatbox textarea");
                 var messages = $("#messages");
                 $("#chatbox").submit(function(){
@@ -45,7 +45,7 @@
                 if (!window["WebSocket"]) {
                     alert("Error: Your browser does not support web sockets.")
                 } else {
-                    socket = new WebSocket("ws://apoti.herokuapp.com/chat");
+                    socket = new WebSocket("ws://{{.Host}}/room");
                     socket.onclose = function() {
                         alert("Connection has been closed.");
                     }
